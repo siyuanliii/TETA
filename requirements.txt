@@ -1,0 +1,4 @@
+git+https://github.com/siyuanliii/TrackEval.git
+git+https://github.com/scalabel/scalabel.git@scalabel-evalAPI
+scipy
+numpy==1.26.0
