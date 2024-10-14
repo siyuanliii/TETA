@@ -1,7 +1,7 @@
 # Track Every Thing Accuracy
 [Track Every Thing in the Wild](https://arxiv.org/abs/2207.12978) [ECCV 2022].
 
-This is the official implementation of TETA metric describe in the paper. 
+This is the official implementation of TETA metric describe in the paper. This repo is an updated version of the original [TET repo](https://github.com/SysCV/tet) for TETA metric.
 
 <img src="figures/figure_1.png" width="600">
 
@@ -97,7 +97,8 @@ python scripts/run_ovmot.py --METRICS TETA --TRACKERS_TO_EVAL my_tracker --GT_FO
 ```
 
 ### Run on Open-Vocabulary MOT test set
-* Download GT: [tao_test_lvis_v1_classes.json](https://drive.google.com/file/d/19LxOj0w3lNyw4IGeMpwFd5OxC4PzFyrv/view?usp=sharing)
+* Download GT: [tao_test_lvis_v1_classes.json](https://drive.google.com/file/d/19LxOj0w3lNyw4IGeMpwFd5OxC4PzFyrv/view?usp=sharing).
+* 
 Then you can evaluate your tracker on Open-Vocabulary MOT test set by using the corresponding ground truth json file like above.
 
 
