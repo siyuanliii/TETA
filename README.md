@@ -98,7 +98,6 @@ python scripts/run_ovmot.py --METRICS TETA --TRACKERS_TO_EVAL my_tracker --GT_FO
 
 ### Run on Open-Vocabulary MOT test set
 * Download GT: [tao_test_lvis_v1_classes.json](https://drive.google.com/file/d/19LxOj0w3lNyw4IGeMpwFd5OxC4PzFyrv/view?usp=sharing).
-* 
 Then you can evaluate your tracker on Open-Vocabulary MOT test set by using the corresponding ground truth json file like above.
 
 
@@ -108,7 +107,6 @@ Run on BDD100K MOT val dataset.
 * Download GT:  Please first download the annotations from the [official website](https://doc.bdd100k.com/download.html). On the download page, the required data and annotations are `mot` set annotations: `MOT 2020 Labels`.
 * Download Example Pred: You can download an example prediction file from the [MASA-SAM-ViT-B](https://github.com/siyuanliii/masa/blob/main/docs/model_zoo.md)'s results json file tested on BDD100K MOT val:  [masa_sam_vitb_bdd_mot_val.json](https://drive.google.com/file/d/19diA2Zij-lbDUP0CzJa36nYWKrGy_4dn/view?usp=sharing)
 * Run Command, assume you put your downloaded the pred in the ```./jsons/``` under the root folder and the GT in the ```./data/bdd/annotations/scalabel_gt/box_track_20/val/```:
-* 
 ```angular2html
 python scripts/run_bdd.py --scalabel_gt data/bdd/annotations/scalabel_gt/box_track_20/val/ --resfile_path ./jsons/masa_sam_vitb_bdd_mot_val.json --metrics TETA HOTA CLEAR 
 ```
