@@ -490,7 +490,7 @@ class TAO(_BaseDataset):
             ann["category_id"] = merge_map.get(ann["category_id"], ann["category_id"])
 
     def _compute_vid_mappings(self, annotations):
-        """Computes mappings from videos to corresponding tracks and images."""
+
         vids_to_tracks = {}
         vids_to_imgs = {}
         vid_ids = [vid["id"] for vid in self.gt_data["videos"]]
@@ -500,23 +500,24 @@ class TAO(_BaseDataset):
         for image in self.gt_data["images"]:
             images[image["id"]] = image
 
+        # Helper dictionaries to speed up lookups
+        track_lookup = {}
+        img_lookup = {}
+
         for ann in annotations:
             ann["area"] = ann["bbox"][2] * ann["bbox"][3]
 
             vid = ann["video_id"]
-            if ann["video_id"] not in vids_to_tracks.keys():
-                vids_to_tracks[ann["video_id"]] = list()
-            if ann["video_id"] not in vids_to_imgs.keys():
-                vids_to_imgs[ann["video_id"]] = list()
+            if vid not in vids_to_tracks:
+                vids_to_tracks[vid] = []
+            if vid not in vids_to_imgs:
+                vids_to_imgs[vid] = []
 
             # fill in vids_to_tracks
             tid = ann["track_id"]
-            exist_tids = [track["id"] for track in vids_to_tracks[vid]]
-            try:
-                index1 = exist_tids.index(tid)
-            except ValueError:
-                index1 = -1
-            if tid not in exist_tids:
+            track_key = (vid, tid)
+
+            if track_key not in track_lookup:
                 curr_track = {
                     "id": tid,
                     "category_id": ann["category_id"],
@@ -524,21 +525,20 @@ class TAO(_BaseDataset):
                     "annotations": [ann],
                 }
                 vids_to_tracks[vid].append(curr_track)
+                track_lookup[track_key] = curr_track
             else:
-                vids_to_tracks[vid][index1]["annotations"].append(ann)
-
+                track_lookup[track_key]["annotations"].append(ann) # Accessing the track directly
+            
             # fill in vids_to_imgs
             img_id = ann["image_id"]
-            exist_img_ids = [img["id"] for img in vids_to_imgs[vid]]
-            try:
-                index2 = exist_img_ids.index(img_id)
-            except ValueError:
-                index2 = -1
-            if index2 == -1:
+            img_key = (vid, img_id)
+
+            if img_key not in img_lookup:
                 curr_img = {"id": img_id, "annotations": [ann]}
                 vids_to_imgs[vid].append(curr_img)
+                img_lookup[img_key] = curr_img
             else:
-                vids_to_imgs[vid][index2]["annotations"].append(ann)
+                img_lookup[img_key]["annotations"].append(ann)
 
         # sort annotations by frame index and compute track area
         for vid, tracks in vids_to_tracks.items():
